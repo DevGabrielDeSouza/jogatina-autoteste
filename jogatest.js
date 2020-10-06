@@ -16,7 +16,7 @@ async function ClickElement(path) {
 async function ClickElementWhenVisible(path) {
 	errorInLastTest = false;
 	try {
-		await driver.wait(until.elementIsVisible(driver.findElement(By.xpath(path))), timeoutWait).then(async el => {
+		await driver.wait(until(driver.findElement(By.xpath(path))), timeoutWait).then(async el => {
 
 			try{
 				await driver.findElement(By.xpath(path)).click();
@@ -57,6 +57,10 @@ async function LoginFirstPage(username, password) {
 async function ChangeAvatar(avatarPath) {
 	await driver.switchTo().defaultContent();
 
+	/*try {
+		await ClickElement("/html/body/div[7]/div[1]/div[2]/div[2]/button[4]");
+	}catch{}*/
+
 
 	//Move pointer to user side menu
 	const actions = driver.actions({ bridge: true });
@@ -79,7 +83,7 @@ async function SelectAvatar(avatarPath) {
 	await driver.switchTo().defaultContent();
 	await driver.switchTo().frame(driver.findElement(By.xpath("/html/body/div[7]/div[1]/div[2]/div[2]/div[1]/iframe")));
 
-	let startMessage = await driver.findElement(By.xpath("/html/body/div[2]/div/div")).getText();
+	//let startMessage = await driver.findElement(By.xpath("/html/body/div[2]/div/div")).getText();
 
 	//click in the new avatar
 	await ClickElement(avatarPath);
@@ -87,8 +91,29 @@ async function SelectAvatar(avatarPath) {
 	//click in confirm avatar change
 	await ClickElement("/html/body/form/div[2]/div/div[2]/input");
 
+	await driver.sleep(4000);
+
+	console.log(await driver.findElement(By.xpath("/html/body/div[2]/div/div/span")).getText());
+
+	/*await driver.findElements(locator).then(function (elements) {
+		console.log("Amount: " + elements.length);
+		return elements.length == 0;
+	});*/
+
+
+
+
+	///html/body/div[7]/div[1]/div[2]/div[2]/div[1]/iframe
+	//await driver.switchTo().frame(driver.findElement(By.xpath("/html/body/div[7]/div[1]/div[2]/div[2]/div[1]/iframe")));
+	//await driver.wait(until.elementLocated(By.className("/html/body/div[2]/div/div/span")), 20000);
+
+	/*await driver.sleep(6000);
+
 	//debug result of the avatar change
-	let currentMessage = await driver.findElement(By.xpath("/html/body/div[2]/div/div")).getText();
+	let currentMessage = await driver.findElement(By.xpath("/html/body/div[2]/div/div/span")).getText();
+
+	console.log(currentMessage);
+	await driver.sleep(6000);*/
 
 	
 	//click in the close frame button
@@ -119,7 +144,8 @@ async function SelectAvatar(avatarPath) {
 		await ChangeAvatar("/html/body/form/div[1]/div/ul/li[13]/label/img");
 		await ChangeAvatar("/html/body/form/div[1]/div/ul/li[12]/label/img");
 		await ChangeAvatar("/html/body/form/div[1]/div/ul/li[11]/label/img");
-		await ChangeAvatar("/html/body/form/div[1]/div/ul/li[10]/label/img");
+		await ChangeAvatar("/html/body/form/div[1]/div/ul/li[12]/label/img");
+		await ChangeAvatar("/html/body/form/div[1]/div/ul/li[11]/label/img");
 
 	}
 	finally {
