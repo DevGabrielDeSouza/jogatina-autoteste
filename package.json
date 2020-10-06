@@ -1,0 +1,14 @@
+{
+  "name": "jogatina-autoteste",
+  "version": "1.0.0",
+  "description": "A project to study Page Object and automated tests on the Jogatina website.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Gabriel de Souza",
+  "license": "ISC",
+  "dependencies": {
+    "selenium-webdriver": "^4.0.0-alpha.7"
+  }
+}
