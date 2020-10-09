@@ -49,16 +49,19 @@ module.exports = {
 	quit : async function (){
 		return this.driver.quit();
 	},
-	goToPage: async function (url) {
+	goToPage : async function (url) {
 		return this.driver.get(url);
 	},
-	setImplicitTimeOut: function (timeoutWait) {
+	setImplicitTimeOut : function (timeoutWait) {
 		this.driver.manage().setTimeouts({ implicit: (timeoutWait) });
 	},
-	sleep: async function (time) {
+	sleep : async function (time) {
 		return await this.driver.sleep(time);
 	},
-	findElement: async function (path, type) {
+	moveToFrame: async function (path, type){
+		return await this.driver.switchTo().frame(this.findElement(path, type));
+	},
+	findElement:  async function (path, type) {
 		switch (type) {
 			case this.PathType.XPATH:
 				try {
@@ -81,7 +84,7 @@ module.exports = {
 				break;
 		}
 	},
-	clickElement: async function (path, type) {
+	clickElement : async function (path, type) {
 		return (await this.findElement(path, type)).click().catch(
 			e => {
 				debugError(e, "Trying to click in WebElement.", path),
@@ -89,7 +92,7 @@ module.exports = {
 			}
 		);
 	},
-	inputTextElement: async function (path, text, type) {
+	inputTextElement : async function (path, text, type) {
 		return (await this.findElement(path, type)).sendKeys(text).catch(
 			e => {
 				debugError(e, "Trying to input text in WebElement.", path),
@@ -113,7 +116,7 @@ module.exports = {
 			}
 		);
 	},
-	mouseOverElement: async function (path, type){
+	mouseOverElement : async function (path, type){
 		return await Promise.all([
 			(await this.findElement(path, type).then(elem => {
 				this.actions.move({ origin: elem });
