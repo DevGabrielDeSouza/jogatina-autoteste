@@ -100,7 +100,7 @@ module.exports = {
 			}
 		);
 	},
-	clearTextElement : async function (path) {
+	clearTextElement : async function (path, type) {
 		return (await this.findElement(path, type)).clear().catch(
 			e => {
 				debugError(e, "Trying to clear text in WebElement.", path),

@@ -3,6 +3,7 @@ const Driver = require('../utils/webdriverutils');
 const LoginPage = require('../pageobjects/loginpage');
 const SideMenuPage = require('../pageobjects/sidemenupage');
 const ChangeAvatarPage = require('../pageobjects/changeavatarpage');
+const UpdateProfilePage = require('../pageobjects/updateprofilepage');
 
 (async function example() {
 	Driver.initializeChrome();
@@ -12,13 +13,15 @@ const ChangeAvatarPage = require('../pageobjects/changeavatarpage');
 	LoginPage.initialize(Driver);
 	SideMenuPage.initialize(Driver);
 	ChangeAvatarPage.initialize(Driver);
+	UpdateProfilePage.initialize(Driver);
 
 	try {
 		await LoginPage.login("gab@test.com", "teste123");
 		await SideMenuPage.mouseOverArrowButton();
-		await SideMenuPage.popupChangeAvatar();
+		await SideMenuPage.popupUpdateProfile();
 
-		await ChangeAvatarPage.selectAvatarRoutine(6);
+		await UpdateProfilePage.updateProfileRoutine("Rio de Janeiro", "RJ", 13, 15, 6, 17);
+		
 	}
 	finally {
 		Driver.quit();
