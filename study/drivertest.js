@@ -1,6 +1,6 @@
 const { Builder, By, Key, until } = require('selenium-webdriver');
 
-const Driver = require('./webdriverutils');
+const Driver = require('../webdriverutils');
 
 (async function example() {
 	Driver.initializeChrome();
