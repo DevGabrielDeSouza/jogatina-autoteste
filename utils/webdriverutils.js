@@ -1,7 +1,10 @@
-const { Builder, By, Key, until } = require('selenium-webdriver');
+const { Builder, By, Key, until, Actions } = require('selenium-webdriver');
 
 function Driver(_driver) {
 	this.driver = _driver;
+}
+function ActionManager(_actions) {
+	this.actions = _actions;
 }
 
 function errorBehaviour(error) {
@@ -20,16 +23,28 @@ function debugError(e, action, path){
 module.exports = {
 	driver: Driver,
 
+	actions: ActionManager,
+
 	PathType : Object.freeze({
 		XPATH: 0,
 		ID: 1
 	}),
 
 	initializeFirefox: async function () {
-		return this.driver = new Builder().forBrowser("firefox").build();
+		this.driver = new Builder().forBrowser("firefox").build();
+		this.actions = this.driver.actions({ bridge: true });
+		return await Promise.all([
+			(await this.driver),
+			(await this.actions)
+		]);
 	},
 	initializeChrome: async function () {
-		return this.driver = new Builder().forBrowser("chrome").build();
+		this.driver = new Builder().forBrowser("chrome").build();
+		this.actions = this.driver.actions({ bridge: true });
+		return await Promise.all([
+			(await this.driver),
+			(await this.actions)
+		]);
 	},
 	quit : async function (){
 		return this.driver.quit();
@@ -94,8 +109,21 @@ module.exports = {
 		return (await this.findElement(path, type)).getText().catch(
 			e => {
 				debugError(e, "Trying to get text in WebElement.", path),
-					errorBehaviour(e)
+				errorBehaviour(e)
 			}
 		);
+	},
+	mouseOverElement: async function (path, type){
+		return await Promise.all([
+			(await this.findElement(path, type).then(elem => {
+				this.actions.move({ origin: elem });
+			}).catch(
+				e => {
+					debugError(e, "Trying to put mouse over WebElement.", path),
+					errorBehaviour(e)
+				}
+			)),
+			(await this.actions.perform())
+		]);
 	}
 }
