@@ -1,9 +1,9 @@
+let sleepWait = 3000;
+
 function DriverUtils(_driver) {
 	this.driver = _driver;
 }
 
-///html/body/form/div[1]/div/ul/li[6]/label/img
-///html/body/form/div[1]/div/ul/li[6]/label/img
 const ElementsPaths = {
 	PopupFrame : "/html/body/div[7]/div[1]/div[2]/div[2]/div[1]/iframe",
 	Avatares : function(id){
@@ -12,8 +12,6 @@ const ElementsPaths = {
 	ConfirmButton:  "/html/body/form/div[2]/div/div[2]/input",
 	FeedbackText: "/html/body/div[2]/div/div/span"
 }
-
-let sleepWait = 3000;
 
 module.exports = {
 	driver : DriverUtils,
@@ -25,7 +23,6 @@ module.exports = {
 	},
 	optionAvatar : async function (id) {
 		return await this.driver.clickElement(ElementsPaths.Avatares(id), this.driver.PathType.XPATH);
-		//return await this.driver.clickElement("/html/body/form/div[1]/div/ul/li[17]/label/img", this.driver.PathType.XPATH);
 	},
 	confirmButton : async function () {
 		return await this.driver.clickElement(ElementsPaths.ConfirmButton, this.driver.PathType.XPATH);
