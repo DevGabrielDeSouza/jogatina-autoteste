@@ -1,6 +1,6 @@
-const Driver = require('../webdriverutils');
+const Driver = require('../utils/webdriverutils');
 
-const LoginPage = require('./pageobjects/loginpage');
+const LoginPage = require('../pageobjects/loginpage');
 
 (async function example() {
 	Driver.initializeChrome();
