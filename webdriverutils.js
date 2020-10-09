@@ -69,7 +69,7 @@ module.exports = {
 	clickElement: async function (path, type) {
 		(await this.findElement(path, type)).click().catch(
 			e => {
-				debugError(e, "Trying to click element.", path),
+				debugError(e, "Trying to click in WebElement.", path),
 				errorBehaviour(e)
 			}
 		);
@@ -77,7 +77,7 @@ module.exports = {
 	inputTextElement: async function (path, text, type) {
 		(await this.findElement(path, type)).sendKeys(text).catch(
 			e => {
-				debugError(e, "Trying to input text.", path),
+				debugError(e, "Trying to input text in WebElement.", path),
 				errorBehaviour(e)
 			}
 		);
@@ -87,6 +87,14 @@ module.exports = {
 			e => {
 				debugError(e, "Trying to clear text in WebElement.", path),
 				errorBehaviour(e)
+			}
+		);
+	},
+	getTextElement : async function (path, type) {
+		(await this.findElement(path, type)).getText().catch(
+			e => {
+				debugError(e, "Trying to get text in WebElement.", path),
+					errorBehaviour(e)
 			}
 		);
 	}
