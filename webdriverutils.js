@@ -26,22 +26,22 @@ module.exports = {
 	}),
 
 	initializeFirefox: async function () {
-		this.driver = new Builder().forBrowser("firefox").build();
+		return this.driver = new Builder().forBrowser("firefox").build();
 	},
 	initializeChrome: async function () {
-		this.driver = new Builder().forBrowser("chrome").build();
+		return this.driver = new Builder().forBrowser("chrome").build();
 	},
-	quit : function (){
-		this.driver.quit();
+	quit : async function (){
+		return this.driver.quit();
 	},
 	goToPage: async function (url) {
-		this.driver.get(url);
+		return this.driver.get(url);
 	},
 	setImplicitTimeOut: function (timeoutWait) {
 		this.driver.manage().setTimeouts({ implicit: (timeoutWait) });
 	},
 	sleep: async function (time) {
-		await this.driver.sleep(time);
+		return await this.driver.sleep(time);
 	},
 	findElement: async function (path, type) {
 		switch (type) {
@@ -67,7 +67,7 @@ module.exports = {
 		}
 	},
 	clickElement: async function (path, type) {
-		(await this.findElement(path, type)).click().catch(
+		return (await this.findElement(path, type)).click().catch(
 			e => {
 				debugError(e, "Trying to click in WebElement.", path),
 				errorBehaviour(e)
@@ -75,7 +75,7 @@ module.exports = {
 		);
 	},
 	inputTextElement: async function (path, text, type) {
-		(await this.findElement(path, type)).sendKeys(text).catch(
+		return (await this.findElement(path, type)).sendKeys(text).catch(
 			e => {
 				debugError(e, "Trying to input text in WebElement.", path),
 				errorBehaviour(e)
@@ -83,7 +83,7 @@ module.exports = {
 		);
 	},
 	clearTextElement : async function (path) {
-		(await this.findElement(path, type)).clear().catch(
+		return (await this.findElement(path, type)).clear().catch(
 			e => {
 				debugError(e, "Trying to clear text in WebElement.", path),
 				errorBehaviour(e)
@@ -91,7 +91,7 @@ module.exports = {
 		);
 	},
 	getTextElement : async function (path, type) {
-		(await this.findElement(path, type)).getText().catch(
+		return (await this.findElement(path, type)).getText().catch(
 			e => {
 				debugError(e, "Trying to get text in WebElement.", path),
 					errorBehaviour(e)
